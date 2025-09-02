@@ -5,53 +5,74 @@ import {
 	createRootRoute,
 	Outlet,
 } from "@tanstack/react-router";
+
 import Landing from "../pages/Landing";
-import SignIn from "../pages/auth/Signin";
-import SignUp from "../pages/auth/SignUp";
+import Auth from "../pages/auth/Auth";
+
+// Admin pages
+import AdminLayout from "../pages/admin/AdminLayout";
+import AdminDashboard from "../pages/admin/Dashboard";
+import InstituteAnalytics from "../pages/admin/InstituteAnalytics";
+import ReportVerification from "../pages/admin/ReportVerification";
+// Add other admin pages here
 
 // Root route
 const rootRoute = createRootRoute({
-	component: () => (
-		<div>
-			<Outlet />
-		</div>
-	),
+	component: () => <Outlet />,
 });
 
-// Landing page route
+// Landing
 const indexRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: "/",
 	component: Landing,
 });
 
-// Auth parent route
+// Auth
 const authRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: "auth",
-	component: () => <Outlet />, // needed to nest routes
+	component: Auth,
 });
 
-// Auth children
-const signInRoute = createRoute({
-	getParentRoute: () => authRoute,
-	path: "signin",
-	component: SignIn,
+// Admin layout route (sidebar + header)
+const adminRoute = createRoute({
+	getParentRoute: () => rootRoute,
+	path: "admin",
+	component: AdminLayout,
 });
 
-const signUpRoute = createRoute({
-	getParentRoute: () => authRoute,
-	path: "signup",
-	component: SignUp,
+// Nested admin routes
+const dashboardRoute = createRoute({
+	getParentRoute: () => adminRoute,
+	path: "dashboard",
+	component: AdminDashboard,
 });
 
-// Build the route tree
+const analyticsRoute = createRoute({
+	getParentRoute: () => adminRoute,
+	path: "analytics",
+	component: InstituteAnalytics,
+});
+
+const reportVerificationRoute = createRoute({
+	getParentRoute: () => adminRoute,
+	path: "report-verification",
+	component: ReportVerification,
+});
+
+// Build route tree
 const routeTree = rootRoute.addChildren([
 	indexRoute,
-	authRoute.addChildren([signInRoute, signUpRoute]),
+	authRoute,
+	adminRoute.addChildren([
+		dashboardRoute,
+		analyticsRoute,
+		reportVerificationRoute,
+		// Add other nested admin routes here
+	]),
 ]);
 
-// Create the router
 const router = createRouter({ routeTree });
 
 export default function AppRoutes() {

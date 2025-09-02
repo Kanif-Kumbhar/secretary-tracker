@@ -1,18 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { motion} from "framer-motion";
+import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { RoleCombobox } from "@/components/ui/RoleCombobox";
+import { useRouter } from "@tanstack/react-router";
 
 export default function AuthCard() {
 	const [isSignIn, setIsSignIn] = useState(true);
+	const [role, setRole] = useState("");
+	const router = useRouter();
+
+	const handleSignIn = (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (role === "teacher") {
+			router.navigate({ to: "/teacher/dashboard" });
+		} else if (role === "secretary") {
+			router.navigate({ to: "/secretary/dashboard" });
+		} else {
+			router.navigate({ to: "/admin/dashboard" });
+		}
+	};
 
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-gray-100">
 			<div className="relative w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-lg">
 				<div className="flex w-full h-full">
-					{/* Left Panel (text + orange) */}
+					{/* Left Panel */}
 					<motion.div
 						key={isSignIn ? "left-signin" : "left-signup"}
 						initial={{ x: isSignIn ? "100%" : "-100%", opacity: 0 }}
@@ -50,7 +66,7 @@ export default function AuthCard() {
 						)}
 					</motion.div>
 
-					{/* Right Panel (form) */}
+					{/* Right Panel */}
 					<motion.div
 						key={isSignIn ? "form-signin" : "form-signup"}
 						initial={{ x: isSignIn ? "-100%" : "100%", opacity: 0 }}
@@ -64,7 +80,8 @@ export default function AuthCard() {
 								<h2 className="mb-6 text-3xl font-bold text-center text-brand-text">
 									Sign In
 								</h2>
-								<form className="space-y-6">
+								<form className="space-y-6" onSubmit={handleSignIn}>
+									<RoleCombobox value={role} onChange={setRole} />
 									<Input
 										type="text"
 										placeholder="Username or Email"
@@ -90,6 +107,7 @@ export default function AuthCard() {
 									Create Account
 								</h2>
 								<form className="space-y-6">
+									<RoleCombobox value={role} onChange={setRole} />
 									<Input
 										type="text"
 										placeholder="Full Name"

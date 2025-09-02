@@ -12,11 +12,10 @@ export default function Navbar() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
-
 		<nav className="absolute top-0 left-0 w-full z-30 flex justify-between items-center px-6 py-3">
 			{/* Logo */}
 			<div className="flex items-center gap-2">
-				<img src="src/assets/logo.webp" alt="Quick Heal" className="h-10" />
+				<img src="src/assets/logo.svg" alt="Quick Heal" className="h-10" />
 			</div>
 
 			{/* Desktop Links */}

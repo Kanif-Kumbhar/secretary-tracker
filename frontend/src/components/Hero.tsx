@@ -16,7 +16,7 @@ export default function Hero() {
 
 			{/* CTA Button */}
 			<Link
-				to="/auth/signin"
+				to="/auth"
 				className="
 					relative group overflow-hidden
 					rounded-lg px-6 py-3 shadow-md
@@ -39,11 +39,11 @@ export default function Hero() {
 			{/* Laptop Illustration */}
 			<div className="relative mt-12 flex justify-center items-start">
 				{" "}
-				<div className="absolute top-0 w-72 sm:w-96 md:w-[500px] h-36 sm:h-48 md:h-64 bg-orange-500 rounded-t-full"></div>{" "}
+				<div className="absolute top-10 w-72 sm:w-96 md:w-[500px] h-36 sm:h-48 md:h-64 bg-orange-500 rounded-t-full "></div>{" "}
 				<img
 					src="src/assets/laptop.svg"
 					alt="Dashboard Preview"
-					className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 mt-12"
+					className="relative w-1/2sm:w-2/3 md:w-1/2 lg:w-1/4 mt-20"
 				/>{" "}
 			</div>
 		</section>
