@@ -12,24 +12,11 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "src"),
 		},
 	},
-	build: {
-		// Raise the warning threshold (optional)
-		chunkSizeWarningLimit: 1000,
-
-		rollupOptions: {
-			output: {
-				// Split vendor libs into separate chunks
-				manualChunks: {
-					react: ["react", "react-dom"],
-					radix: [
-						"@radix-ui/react-avatar",
-						"@radix-ui/react-dialog",
-						"@radix-ui/react-dropdown-menu",
-						"@radix-ui/react-popover",
-					],
-					utils: ["clsx", "date-fns"],
-				},
-			},
-		},
+	server: {
+		host: "0.0.0.0", // needed to allow external access
+		port: Number(process.env.PORT) || 5173, // use Render's PORT if available
+		allowedHosts: [
+			"secretary-tracker-1-xzpv.onrender.com", // allow Render host
+		],
 	},
 });
