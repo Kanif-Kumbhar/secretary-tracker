@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import HeaderLogo from "../HeaderLogo";
-import { useRouter, useMatchRoute } from "@tanstack/react-router";
+import { useRouter} from "@tanstack/react-router";
 
 const Sidebar = () => {
 	const router = useRouter();

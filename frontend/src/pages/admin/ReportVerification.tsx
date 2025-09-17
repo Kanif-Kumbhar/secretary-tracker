@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "@/components/admin/dashboard/Header";
 import { TeacherCard } from "@/components/admin/teacherVerification/TeacherCard";
 import { TeacherDetailsModal } from "@/components/admin/teacherVerification/TeacherDetailModal";
