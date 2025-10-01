@@ -1,4 +1,4 @@
-import Sidebar from "@/components/admin/dashboard/SideBar";
+import Sidebar from "@/components/teacher/dashboard/SideBar";
 import React from "react";
 
 export default function AdminLayout({

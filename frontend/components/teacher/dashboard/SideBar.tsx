@@ -2,14 +2,12 @@
 
 import {
 	Home,
-	BarChart2,
-	Folder,
 	Users,
-	FileText,
+	Activity,
+	BarChart2,
 	Settings,
 	HelpCircle,
 	MoreHorizontal,
-	MessageCircle,
 } from "lucide-react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -39,51 +37,40 @@ const Sidebar = () => {
 				{/* Navigation */}
 				<nav className="space-y-2 flex-1">
 					<p className="px-3 text-xs font-semibold text-gray-500 uppercase">
-						Home
+						Main
 					</p>
 					<NavItem
 						icon={<Home size={20} />}
 						label="Dashboard"
-						to="/admin/dashboard"
+						to="/teacher/dashboard"
 						pathname={pathname}
 						router={router}
 					/>
 					<NavItem
 						icon={<BarChart2 size={20} />}
-						label="Institution Analytics"
-						to="/admin/analytics"
-						pathname={pathname}
-						router={router}
-					/>
-					<NavItem
-						icon={<Folder size={20} />}
-						label="Report Verification"
-						to="/admin/report-verification"
-						pathname={pathname}
-						router={router}
-					/>
-
-					<p className="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase">
-						Documents
-					</p>
-					<NavItem
-						icon={<FileText size={20} />}
-						label="College List"
-						to="/admin/colleges"
+						label="Earn & Learn Detail"
+						to="/teacher/earn-learn"
 						pathname={pathname}
 						router={router}
 					/>
 					<NavItem
 						icon={<Users size={20} />}
-						label="Teacher List"
-						to="/admin/teachers"
+						label="Team Details"
+						to="/teacher/groups"
 						pathname={pathname}
 						router={router}
 					/>
 					<NavItem
-						icon={<MessageCircle size={20} />}
-						label="Reports"
-						to="/admin/reports"
+						icon={<Activity size={20} />}
+						label="Mass Activity"
+						to="/teacher/mass-activity"
+						pathname={pathname}
+						router={router}
+					/>
+					<NavItem
+						icon={<BarChart2 size={20} />}
+						label="College Summary"
+						to="/teacher/college-summary"
 						pathname={pathname}
 						router={router}
 					/>
@@ -102,14 +89,14 @@ const Sidebar = () => {
 					<div className="flex items-center">
 						<Avatar>
 							<AvatarImage
-								src="https://placehold.co/40x40/2D3748/E2E8F0?text=O"
-								alt="shadcn"
+								src="https://placehold.co/40x40/2D3748/E2E8F0?text=T"
+								alt="Teacher"
 							/>
-							<AvatarFallback>S</AvatarFallback>
+							<AvatarFallback>T</AvatarFallback>
 						</Avatar>
 						<div className="ml-3">
-							<p className="text-sm font-semibold text-white">The Odd Dev</p>
-							<p className="text-xs text-gray-400">theodddev@gmail.com</p>
+							<p className="text-sm font-semibold text-white">Teacher Name</p>
+							<p className="text-xs text-gray-400">teacher@email.com</p>
 						</div>
 					</div>
 					<MoreHorizontal size={20} className="text-gray-400 cursor-pointer" />
