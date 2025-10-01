@@ -43,16 +43,14 @@ const leaderboard = [
 
 export default function LeaderBoard() {
 	return (
-		<Card className="shadow-md m-4">
+		<Card className="shadow-md m-4 bg-gray-800 text-white">
 			<CardContent className="p-6">
-				<h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
-					LeaderBoard
-				</h3>
+				<h3 className="text-lg font-semibold mb-4 text-white">LeaderBoard</h3>
 
 				<div className="overflow-x-auto">
-					<table className="w-full border-collapse text-gray-900 dark:text-gray-100">
+					<table className="w-full border-collapse text-white">
 						<thead>
-							<tr className="text-left border-b border-gray-300 dark:border-gray-600">
+							<tr className="text-left border-b border-gray-600">
 								<th className="p-2">Rank</th>
 								<th className="p-2">Institution Name</th>
 								<th className="p-2">Presentation %Ach</th>
@@ -69,7 +67,7 @@ export default function LeaderBoard() {
 							{leaderboard.map((doc) => (
 								<tr
 									key={doc.id}
-									className="border-b border-gray-200 dark:border-gray-700 hover:bg-orange-50 dark:hover:bg-orange-900 transition-colors"
+									className="border-b border-gray-700 hover:bg-gray-700 transition-colors"
 								>
 									<td className="p-2">{doc.rank}</td>
 									<td className="p-2">{doc.institution}</td>
