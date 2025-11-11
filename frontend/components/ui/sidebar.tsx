@@ -608,7 +608,8 @@ function SidebarMenuSkeleton({
 }) {
   // Random width between 50 to 90%.
   const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
+    const random = Math.random();
+    return `${Math.floor(random * 40) + 50}%`
   }, [])
 
   return (
@@ -622,7 +623,7 @@ function SidebarMenuSkeleton({
         <Skeleton
           className="size-4 rounded-md"
           data-sidebar="menu-skeleton-icon"
-        />
+        />  
       )}
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"

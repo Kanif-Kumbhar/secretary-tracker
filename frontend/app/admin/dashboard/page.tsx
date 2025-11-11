@@ -3,7 +3,7 @@ import LeaderBoard from "@/components/admin/dashboard/LeaderBoard";
 import Header from "@/components/admin/dashboard/Header";
 import StatCards from "@/components/admin/dashboard/StatCard";
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
 	return (
 		<div className="p-4">
 			<Header title="Admin Dashboard" />

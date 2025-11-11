@@ -22,7 +22,7 @@ import {
 const roles = [
 	{ value: "teacher", label: "Teacher" },
 	{ value: "secretary", label: "Secretary" },
-    {value: "warrior", label: "Warrior"},
+	{ value: "warrior", label: "Warrior" },
 ] as const;
 
 type RoleValue = (typeof roles)[number]["value"];
@@ -30,14 +30,15 @@ type RoleValue = (typeof roles)[number]["value"];
 interface RoleComboboxProps {
 	value: RoleValue | "";
 	onChange: (val: RoleValue) => void;
+	disabledStatus: boolean
 }
 
-export function RoleCombobox({ value, onChange }: RoleComboboxProps) {
+export function RoleCombobox({ value, onChange, disabledStatus }: RoleComboboxProps) {
 	const [open, setOpen] = React.useState(false);
 
 	return (
-		<Popover open={open} onOpenChange={setOpen}>
-			<PopoverTrigger asChild>
+		<Popover open={open} onOpenChange={setOpen} >
+			<PopoverTrigger asChild disabled={disabledStatus}>
 				<Button
 					variant="outline"
 					role="combobox"
