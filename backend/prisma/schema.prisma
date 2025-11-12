@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Enums
+enum Role {
+  ADMIN
+  TEACHER
+  SECRETARY
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ActionType {
+  APPROVED
+  REJECTED
+}
+
+enum Gender {
+  male
+  female
+  other
+}
+
+model Institution {
+  institution_id String      @id @default(cuid())
+  name           String
+  teachers       Teacher[]
+  secretaries    Secretary[]
+  createdAt      DateTime    @default(now())
+}
+
+model Teacher {
+  id             String       @id @default(cuid())
+  institution_id String?
+  institution    Institution? @relation(fields: [institution_id], references: [institution_id])
+  name           String
+  contactNumber  String       @unique
+  password       String
+  email          String       @unique
+  createdAt      DateTime     @default(now())
+  address        String?
+  bankName       String?
+  bankAccNumber  String?
+  ifscCode       String?
+}
+
+model Secretary {
+  id             String       @id @default(cuid())
+  institution_id String?
+  institution    Institution? @relation(fields: [institution_id], references: [institution_id])
+  name           String
+  contactNumber  String       @unique
+  password       String
+  email          String       @unique
+  createdAt      DateTime     @default(now())
+  address        String?
+  bankName       String?
+  bankAccNumber  String?
+  ifscCode       String?
+}
+
+model UsersTemp {
+  id              String      @id @default(cuid())
+  fullName        String
+  email           String      @unique
+  passwordHash    String
+  role            Role
+  contactNumber   String      @unique
+  collegeName     String
+  createdAt       DateTime    @default(now())
+  adminAction     ActionType?
+  adminActionTime DateTime?
+}
+
+
