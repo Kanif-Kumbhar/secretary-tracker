@@ -53,7 +53,6 @@ model Teacher {
   ifscCode       String?
 }
 
-
 model Secretary {
   id             String       @id @default(cuid())
   institution_id String?
@@ -90,3 +89,92 @@ model UsersTemp {
  * }
  * Address Text;
  */
+
+model Group {
+  id            String           @id @default(cuid())
+  groupName     String?
+  members       CyberWarrior[]
+  impacts       ImpactActivity[]
+  presentations Presentation[]
+  createdAt     DateTime         @default(now())
+}
+
+model CyberWarrior {
+  id        String   @id @default(cuid())
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id])
+  name      String
+  
+  createdAt DateTime @default(now())
+
+  @@index([groupId])
+}
+
+// ==================== Impact Activity ====================
+model ImpactActivity {
+  id      String @id @default(cuid())
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
+
+  organizationName    String?
+  leaderName          String?
+  date                DateTime?
+  messagePropagated   String?
+  activityDurationMin Int?
+  location            String?
+  participantsCount   Int?
+
+  resourcesInvolved String?
+  socialMediaLinks  String?
+  mediaLinks        String?
+  remarks           String?
+
+  createdAt DateTime @default(now())
+
+  @@index([groupId])
+}
+
+enum Class {
+  Five
+  Six
+  Seven
+  Eight
+  Nine
+  Ten
+  Eleven
+  Twelve
+  SrCollege
+}
+
+// ==================== Presentation Details ====================
+model Presentation {
+  id      String @id @default(cuid())
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
+
+  mentorFaculty String?
+  classType     String
+  schoolName    String
+  taluka        String?
+  city          String?
+  district      String?
+  principalName String?
+  schoolContact String?
+  medium        String?
+  date          DateTime?
+  studentsClass Students[]
+
+  createdAt DateTime @default(now())
+
+  @@index([groupId])
+}
+
+model Students {
+  id             String        @id @default(cuid())
+  classType      Class
+  boysCount      Int
+  GirlsCount     Int
+  createdAt      DateTime      @default(now())
+  presentation   Presentation? @relation(fields: [presentationId], references: [id])
+  presentationId String?
+}

@@ -1,10 +1,14 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import prisma from "@/lib/db";
 
 export async function getSessionUser() {
   return await auth();
+}
+
+export async function logOut() {
+  return await signOut();
 }
 
 export async function getTypeOfUser() {

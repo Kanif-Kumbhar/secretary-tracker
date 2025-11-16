@@ -1,14 +1,33 @@
 "use client";
 
 import React from "react";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerInstitute } from "@/types/form-schemas";
+import { z } from "zod";
+
+type registerInstituteForm = z.infer<typeof registerInstitute>;
 
 export default function InstitutionRegisterPage() {
-  const form = useForm({
+  const [isPending, startTransition] = React.useTransition();
+  const form = useForm<registerInstituteForm>({
+    resolver: zodResolver(registerInstitute),
     defaultValues: {
       name: "",
       address: "",
@@ -21,9 +40,16 @@ export default function InstitutionRegisterPage() {
     },
   });
 
+  // Handling form submit
+  async function handleformSubmit(data: registerInstituteForm) {
+    startTransition(async () => {
+      console.log("Form Data Submitted: ", data);
+      // Here you would typically send data to the API or handle the logic
+    });
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-100">
-
       {/* Main Section */}
       <main className="flex-1 px-10 py-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
@@ -32,7 +58,10 @@ export default function InstitutionRegisterPage() {
 
         <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8">
           <Form {...form}>
-            <form className="space-y-6">
+            <form
+              className="space-y-6"
+              onSubmit={form.handleSubmit(handleformSubmit)}
+            >
               {/* Institution Name */}
               <FormField
                 control={form.control}
@@ -41,6 +70,7 @@ export default function InstitutionRegisterPage() {
                   <FormItem>
                     <FormControl>
                       <Input
+                        disabled={isPending}
                         type="text"
                         placeholder="Institution Name"
                         {...field}
@@ -62,6 +92,7 @@ export default function InstitutionRegisterPage() {
                       <Input
                         type="text"
                         placeholder="Address"
+                        disabled={isPending}
                         {...field}
                         className="bg-white placeholder-gray-400 text-gray-800 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       />
@@ -80,6 +111,7 @@ export default function InstitutionRegisterPage() {
                     <FormControl>
                       <Input
                         type="text"
+                        disabled={isPending}
                         placeholder="District"
                         {...field}
                         className="bg-white placeholder-gray-400 text-gray-800 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -97,7 +129,11 @@ export default function InstitutionRegisterPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange} // Fix state selection
+                        disabled={isPending}
+                      >
                         <SelectTrigger className="w-full px-4 py-3 bg-white text-gray-800 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
                           <SelectValue placeholder="Select State" />
                         </SelectTrigger>
@@ -125,6 +161,7 @@ export default function InstitutionRegisterPage() {
                       <Input
                         type="text"
                         placeholder="Pincode"
+                        disabled={isPending}
                         {...field}
                         className="bg-white placeholder-gray-400 text-gray-800 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       />
@@ -143,6 +180,7 @@ export default function InstitutionRegisterPage() {
                     <FormControl>
                       <Input
                         type="email"
+                        disabled={isPending}
                         placeholder="Institution Email"
                         {...field}
                         className="bg-white placeholder-gray-400 text-gray-800 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -163,6 +201,7 @@ export default function InstitutionRegisterPage() {
                       <Input
                         type="tel"
                         placeholder="Contact Number"
+                        disabled={isPending}
                         {...field}
                         className="bg-white placeholder-gray-400 text-gray-800 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
                       />
@@ -179,7 +218,11 @@ export default function InstitutionRegisterPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange} // Fix institution type selection
+                        disabled={isPending}
+                      >
                         <SelectTrigger className="w-full px-4 py-3 bg-white text-gray-800 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
                           <SelectValue placeholder="Select Institution Type" />
                         </SelectTrigger>
@@ -197,7 +240,8 @@ export default function InstitutionRegisterPage() {
 
               {/* Submit Button */}
               <Button
-                type="button"
+                type="submit" // Fix submit button type
+                disabled={isPending}
                 className="w-full py-4 font-semibold text-white rounded-lg shadow-md bg-orange-500 hover:bg-orange-600"
               >
                 Register Institution

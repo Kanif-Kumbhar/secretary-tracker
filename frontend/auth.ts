@@ -22,7 +22,7 @@ declare module "next-auth" {
 }
 
 declare module "next-auth/jwt" {
-  interface JWT extends ExtendedUser {} // For JWT token (client + server consistency)
+  interface x extends ExtendedUser {} // For JWT token (client + server consistency)
 }
 const handler = NextAuth({
   pages: {
