@@ -81,14 +81,13 @@ model UsersTemp {
   adminActionTime DateTime?
 }
 
-/**
- * Bank Details {
- * bank name
- * bank accc number
- * ifsc code
- * }
- * Address Text;
- */
+// 
+// Bank Details {
+// bank name
+// bank accc number
+// ifsc code
+// }
+ 
 
 model Group {
   id            String           @id @default(cuid())
