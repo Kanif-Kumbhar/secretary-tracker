@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerInstitute } from "@/types/form-schemas";
+import { registerInstitute } from "@/types/form-schema";
 import { z } from "zod";
 
 type registerInstituteForm = z.infer<typeof registerInstitute>;
