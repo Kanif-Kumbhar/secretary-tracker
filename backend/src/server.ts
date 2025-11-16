@@ -1,15 +1,15 @@
+import dotenv from "dotenv";
+dotenv.config(); 
+
 import express, { Request, Express, Response } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import { Server } from "socket.io";
 import http from "http";
-import adminRoute from "./api/admin-route";
 
+import adminRoute from "./api/admin-route";
 import userRoute from "./api/user-route";
 
 const port = 9000;
-dotenv.config();
-
 
 const app: Express = express();
 
@@ -42,4 +42,5 @@ app.use("/api/admin", adminRoute);
 server.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
+
 export { io };
