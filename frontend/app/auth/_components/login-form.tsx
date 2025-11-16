@@ -1,7 +1,7 @@
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RoleCombobox } from '@/components/ui/RoleCombobox'
-import { loginSchema } from '@/lib/form-schema';
+import { loginSchema } from '@/types/form-schema';
 import { useRouter } from 'next/navigation';
 import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form';
