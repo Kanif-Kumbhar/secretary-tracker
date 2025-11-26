@@ -42,21 +42,21 @@ const Sidebar = () => {
 					<NavItem
 						icon={<Home size={20} />}
 						label="Dashboard"
-						to="/cyber-warrior/dashboard"
+						to="/secretary/dashboard"
 						pathname={pathname}
 						router={router}
 					/>
 					<NavItem
 						icon={<BarChart2 size={20} />}
 						label="Presentation Details"
-						to="/cyber-warrior/presentation-details"
+						to="/secretary/presentation-details"
 						pathname={pathname}
 						router={router}
 					/>
 					<NavItem
 						icon={<Users size={20} />}
 						label="Impact Details"
-						to="/cyber-warrior/impact-details"
+						to="/secretary/impact-details"
 						pathname={pathname}
 						router={router}
 					/>
