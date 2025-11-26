@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import queryClient from "@/lib/tanstack-query";
 import socket from "@/lib/socket-io";
 import { decryptSocketData } from "@/hooks/cryptr";
+import { statusEnum } from "@/types/common";
 
 
 async function fetchUnverifiedTeachers() {
@@ -80,9 +81,9 @@ export default function ReportVerification() {
 		setModalOpen(true);
 	};
 
-	const handleVerify = async (teacher: UsersTemp) => {
+	const handleStatus = async (teacher: UsersTemp, status: statusEnum) => {
 		const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/verify-teacher/${teacher.id}`, {
-			adminAction: "APPROVED"
+			adminAction: status
 		});
 		toast.success(response.data);
 		setModalOpen(false);
@@ -90,14 +91,6 @@ export default function ReportVerification() {
 			return prevTeachers.filter((prevTeacher) => prevTeacher.id !== teacher.id)
 		})
 
-	};
-
-	const handleSendBack = async (teacher: UsersTemp) => {
-		const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/verify-teacher/${teacher.id}`, {
-			adminAction: "REJECTED"
-		});
-		toast.success(response.data);
-		setModalOpen(false);
 	};
 
 
@@ -122,8 +115,8 @@ export default function ReportVerification() {
 				isOpen={modalOpen}
 				onClose={() => setModalOpen(false)}
 				teacher={selectedTeacher}
-				onVerify={handleVerify}
-				onSendBack={handleSendBack}
+				onVerify={handleStatus}
+				onSendBack={handleStatus}
 			/>
 		</div>
 	);

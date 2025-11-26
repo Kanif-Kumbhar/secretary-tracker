@@ -8,18 +8,38 @@ import {
 	Settings,
 	HelpCircle,
 	MoreHorizontal,
+	User,
+	LogOut,
 } from "lucide-react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import React from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { logOut } from "@/hooks/user";
+import { useSessionContext } from "@/context/session";
 
 const Sidebar = () => {
+	const { session } = useSessionContext();
+	const [showLogoutAlert, setShowLogoutAlert] = React.useState(false);
+	const [showProfileDialog, setShowProfileDialog] = React.useState(false);
+	const [isPending, startTransition] = React.useTransition();
+
 	const pathname = usePathname();
 	const router = useRouter();
 
+
+	const handleLogout = () => {
+		setShowLogoutAlert(false);
+		startTransition(async () => {
+			await logOut();
+		});
+	};
+
 	return (
-		<aside className="w-64 flex-shrink-0 bg-gray-900 p-4 flex flex-col h-screen">
+		<aside className="w-64  flex-shrink-0 bg-gray-900 p-4 flex flex-col h-screen">
 			{/* Top Section */}
 			<div className="flex flex-col flex-1">
 				{/* Logo */}
@@ -86,22 +106,91 @@ const Sidebar = () => {
 					<HelpCircle size={20} className="mr-3" /> Get Help
 				</div>
 				<div className="border-t border-gray-700 mt-4 pt-4 flex items-center justify-between">
-					<div className="flex items-center">
-						<Avatar>
+					<div className="flex items-center flex-1 min-w-0">
+						<Avatar className="flex-shrink-0">
 							<AvatarImage
 								src="https://placehold.co/40x40/2D3748/E2E8F0?text=T"
 								alt="Teacher"
 							/>
 							<AvatarFallback>T</AvatarFallback>
 						</Avatar>
+						<div className="ml-3 flex-1 min-w-0">
+							<p className="text-xs font-semibold text-white truncate">
+								{session?.user.name || "User"}
+							</p>
+							<p className="text-xs text-gray-400 truncate">
+								{session?.user.email || ""}
+							</p>
+						</div>
 						<div className="ml-3">
-							<p className="text-sm font-semibold text-white">Teacher Name</p>
-							<p className="text-xs text-gray-400">teacher@email.com</p>
+							<DropdownMenu modal={false}>
+								<DropdownMenuTrigger asChild>
+									<button
+										className="text-gray-400 hover:text-white transition-colors focus:outline-none ml-2 flex-shrink-0"
+										disabled={isPending}
+									>
+										<MoreHorizontal size={20} className="cursor-pointer" />
+									</button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									align="end"
+									className="w-56 bg-gray-800 border-gray-700 text-gray-100"
+								>
+									<DropdownMenuLabel className="text-gray-400 font-normal">
+										Account Options
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator className="bg-gray-700" />
+									{/* <DropdownMenuItem
+										onClick={() => setShowProfileDialog(true)}
+										disabled={isPending}
+										className="cursor-pointer hover:bg-gray-700 focus:bg-gray-700 focus:text-white"
+									>
+										<User size={16} className="mr-2" />
+										Show Profile
+									</DropdownMenuItem> */}
+									<DropdownMenuItem
+										onClick={() => setShowLogoutAlert(true)}
+										disabled={isPending}
+										className="cursor-pointer text-red-400 hover:bg-gray-700 hover:text-red-300 focus:bg-gray-700 focus:text-red-300"
+									>
+										<LogOut size={16} className="mr-2" />
+										Logout
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
 						</div>
 					</div>
-					<MoreHorizontal size={20} className="text-gray-400 cursor-pointer" />
 				</div>
 			</div>
+
+			<AlertDialog open={showLogoutAlert} onOpenChange={setShowLogoutAlert}>
+				<AlertDialogContent className="bg-gray-800 border-gray-700 text-gray-100">
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							Are you sure you want to logout?
+						</AlertDialogTitle>
+						<AlertDialogDescription className="text-gray-400">
+							You will be signed out of your account and redirected to the login
+							page. Any unsaved changes will be lost.
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel
+							className="bg-gray-700 hover:bg-gray-600 text-gray-100 border-gray-600"
+							disabled={isPending}
+						>
+							Cancel
+						</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={handleLogout}
+							disabled={isPending}
+							className="bg-red-600 hover:bg-red-700 text-white"
+						>
+							{isPending ? "Logging out..." : "Logout"}
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
 		</aside>
 	);
 };
@@ -124,11 +213,10 @@ const NavItem = ({
 	return (
 		<div
 			onClick={() => router.push(to)}
-			className={`flex items-center px-3 py-2 text-sm font-medium rounded-md cursor-pointer ${
-				isActive
-					? "bg-gray-800 text-white"
-					: "text-gray-400 hover:bg-gray-800 hover:text-white"
-			}`}
+			className={`flex items-center px-3 py-2 text-sm font-medium rounded-md cursor-pointer ${isActive
+				? "bg-gray-800 text-white"
+				: "text-gray-400 hover:bg-gray-800 hover:text-white"
+				}`}
 		>
 			{icon}
 			<span className="ml-3">{label}</span>

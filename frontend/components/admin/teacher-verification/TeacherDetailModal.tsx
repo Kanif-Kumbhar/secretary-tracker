@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Teacher, UsersTemp } from "@prisma/client";
+import { statusEnum } from "@/types/common";
 
 // This component is now part of this file to resolve the import error.
 const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) => {
@@ -49,8 +50,8 @@ interface Props {
     isOpen: boolean;
     onClose: () => void;
     teacher: UsersTemp | null;
-    onVerify: (teacher: UsersTemp) => void;
-    onSendBack: (teacher: UsersTemp) => void;
+    onVerify: (teacher: UsersTemp, status: statusEnum) => void;
+    onSendBack: (teacher: UsersTemp, status: statusEnum) => void;
 }
 
 // A helper component for displaying details with an icon
@@ -101,14 +102,14 @@ export const TeacherDetailsModal: React.FC<Props> = ({
                     <Button
                         variant="outline"
                         className="flex items-center gap-2 text-red-600 border-red-500 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:border-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-300"
-                        onClick={() => onSendBack(teacher)}
+                        onClick={() => onSendBack(teacher, statusEnum.REJECTED)}
                     >
                         <XCircle className="w-5 h-5" />
                         Send Back
                     </Button>
                     <Button
                         className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => onVerify(teacher)}
+                        onClick={() => onVerify(teacher, statusEnum.APPROVED)}
                     >
                         <CheckCircle className="w-5 h-5" />
                         Verify

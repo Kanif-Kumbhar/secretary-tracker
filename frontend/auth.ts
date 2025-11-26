@@ -22,9 +22,14 @@ declare module "next-auth" {
 }
 
 declare module "next-auth/jwt" {
-  interface x extends ExtendedUser {} // For JWT token (client + server consistency)
+  interface JWT extends ExtendedUser {} // For JWT token (client + server consistency)
 }
-const handler = NextAuth({
+export const {
+  auth,
+  signOut,
+  signIn,
+  handlers: { GET, POST },
+} = NextAuth({
   pages: {
     signIn: "/guest/Login",
     error: "/guest/error",
@@ -87,13 +92,6 @@ const handler = NextAuth({
         }
       }
 
-      // existingUser = (await getTeacherById(token.sub)) ||
-      //   (await getSecretaryById(token.sub)) || {
-      //     id: "admin",
-      //     name: "Admin",
-      //     email: process.env.ADMIN_EMAIL,
-      //     role: "ADMIN" as const,
-      //   };
       if (!existingUser) return token;
 
       // token.role = existingUser.role;
@@ -107,6 +105,4 @@ const handler = NextAuth({
   secret: process.env.NEXT_AUTH_SECRET,
 });
 
-export const { auth, signOut, signIn } = handler;
-
-export { handler as GET, handler as POST };
+// export { handler as GET, handler as POST };
