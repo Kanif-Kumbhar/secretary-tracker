@@ -4,12 +4,14 @@ import Link from "next/link"
 import { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useParams } from "next/navigation"
 
 type Mode = "presentation" | "impact"
 
-export default function WeekEditPage({ params }: { params: { id: string; week: string } }) {
-  const idNum = Number(params.id)
-  const weekNum = Number(params.week)
+export default function WeekEditPage() {
+  const { id, week } = useParams()
+  const idNum = Number(id)
+  const weekNum = Number(week)
   const [mode, setMode] = useState<Mode>("presentation")
 
   const presentationRows = useMemo(() => {
@@ -47,7 +49,7 @@ export default function WeekEditPage({ params }: { params: { id: string; week: s
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-pretty text-2xl md:text-3xl font-semibold text-slate-900">
-            Group{Number.isFinite(idNum) ? idNum : ` ${params.id}`} — Week {weekNum}
+            Group{Number.isFinite(idNum) ? idNum : ` ${id}`} — Week {weekNum}
           </h1>
           <p className="mt-2 text-sm text-slate-600">Manage Presentation or Impact entries for this week.</p>
           <div className="mt-4 h-1 w-28 rounded bg-orange-600" />
@@ -59,7 +61,7 @@ export default function WeekEditPage({ params }: { params: { id: string; week: s
             variant="outline"
             className="border-orange-300 text-orange-700 hover:bg-orange-50 bg-transparent"
           >
-            <Link href={`/teacher/presentation-impact/groups/${params.id}`}>Back to Weeks</Link>
+            <Link href={`/teacher/presentation-impact/groups/${id}`}>Back to Weeks</Link>
           </Button>
           <Button asChild className="bg-orange-600 hover:bg-orange-700 text-white">
             <Link href={`/teacher/presentation-impact/groups`}>All Groups</Link>

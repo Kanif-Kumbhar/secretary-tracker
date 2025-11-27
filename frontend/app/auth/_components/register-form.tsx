@@ -75,7 +75,7 @@ export default function RegisterForm() {
         toast.success(response.data);
         registerForm.reset();
       } catch (error: any) {
-        toast.error(error.response.data ?? "Error Occurred");
+        toast.error(error?.response?.data ?? "Error Occurred");
       }
     });
   }

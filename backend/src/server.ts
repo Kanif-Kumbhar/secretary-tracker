@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config(); 
+dotenv.config();
 
 import express, { Request, Express, Response } from "express";
 import cors from "cors";
@@ -8,6 +8,7 @@ import http from "http";
 
 import adminRoute from "./api/admin-route";
 import userRoute from "./api/user-route";
+import teacherRoute from "./api/teacher-route";
 
 const port = 9000;
 
@@ -38,6 +39,7 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/teacher", teacherRoute);
 
 server.listen(port, () => {
   console.log(`Server running on port: ${port}`);

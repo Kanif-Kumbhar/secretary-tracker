@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import type { Secretary } from "@/types/secretary";
 import {
 	User,
 	Building,
@@ -14,6 +13,8 @@ import {
 	CheckCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { UsersTemp } from "@prisma/client";
+import { statusEnum } from "@/types/common";
 
 // Reusable Modal Component
 const Modal = ({
@@ -75,9 +76,9 @@ const DetailItem = ({
 interface Props {
 	isOpen: boolean;
 	onClose: () => void;
-	secretary: Secretary | null;
-	onVerify: (secretary: Secretary) => void;
-	onSendBack: (secretary: Secretary) => void;
+	secretary: UsersTemp | null;
+	onVerify: (secretaryId: string, status: statusEnum) => void;
+	onSendBack: (secretaryId: string, status: statusEnum) => void;
 }
 
 export const SecretaryDetailsModal: React.FC<Props> = ({
@@ -110,19 +111,19 @@ export const SecretaryDetailsModal: React.FC<Props> = ({
 				{/* Secretary Info */}
 				<div className="mb-8">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-						<DetailItem icon={<User />} label="Name" value={secretary.name} />
+						<DetailItem icon={<User />} label="Name" value={secretary.fullName} />
 						<DetailItem
 							icon={<Building />}
 							label="Institute"
-							value={secretary.institute}
+							value={secretary.collegeName}
 						/>
 						<DetailItem
 							icon={<Phone />}
 							label="Mobile"
-							value={secretary.mobile}
+							value={secretary.contactNumber}
 						/>
-						<DetailItem icon={<Calendar />} label="Age" value={secretary.age} />
-						<DetailItem
+						<DetailItem icon={<Calendar />} label="Age" value={secretary.id} />
+						{/* <DetailItem
 							icon={<Banknote />}
 							label="Bank Details"
 							value={secretary.bankDetails}
@@ -131,7 +132,7 @@ export const SecretaryDetailsModal: React.FC<Props> = ({
 							icon={<Home />}
 							label="Address"
 							value={secretary.address}
-						/>
+						/> */}
 					</div>
 				</div>
 
@@ -140,7 +141,7 @@ export const SecretaryDetailsModal: React.FC<Props> = ({
 					<Button
 						variant="outline"
 						className="flex items-center gap-2 text-red-600 border-red-500 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:border-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-300"
-						onClick={() => onSendBack(secretary)}
+						onClick={() => onSendBack(secretary.id!, statusEnum.REJECTED)}
 					>
 						<XCircle className="w-5 h-5" />
 						Send Back
@@ -148,7 +149,7 @@ export const SecretaryDetailsModal: React.FC<Props> = ({
 
 					<Button
 						className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white"
-						onClick={() => onVerify(secretary)}
+						onClick={() => onVerify(secretary.id!, statusEnum.APPROVED)}
 					>
 						<CheckCircle className="w-5 h-5" />
 						Verify

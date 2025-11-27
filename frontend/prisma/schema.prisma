@@ -30,42 +30,48 @@ enum Gender {
   other
 }
 
-model Institution {
-  institution_id String      @id @default(cuid())
-  name           String
-  teachers       Teacher[]
-  secretaries    Secretary[]
-  createdAt      DateTime    @default(now())
+model Teacher {
+  id            String       @id @default(cuid())
+  name          String
+  contactNumber String       @unique
+  password      String
+  email         String       @unique
+  createdAt     DateTime     @default(now())
+  address       String?
+  bankName      String?
+  bankAccNumber String?
+  ifscCode      String?
+  Institution   Institution?
+  Secretary     Secretary?
 }
 
-model Teacher {
-  id             String       @id @default(cuid())
-  institution_id String?
-  institution    Institution? @relation(fields: [institution_id], references: [institution_id])
-  name           String
-  contactNumber  String       @unique
-  password       String
-  email          String       @unique
-  createdAt      DateTime     @default(now())
-  address        String?
-  bankName       String?
-  bankAccNumber  String?
-  ifscCode       String?
+model Institution {
+  institution_id String     @id @default(cuid())
+  name           String     @unique
+  teacherId      String     @unique
+  teacher        Teacher    @relation(fields: [teacherId], references: [id])
+  createdAt      DateTime   @default(now())
+  Secretary      Secretary?
+
+  @@index([teacherId])
 }
 
 model Secretary {
-  id             String       @id @default(cuid())
-  institution_id String?
-  institution    Institution? @relation(fields: [institution_id], references: [institution_id])
-  name           String
-  contactNumber  String       @unique
-  password       String
-  email          String       @unique
-  createdAt      DateTime     @default(now())
-  address        String?
-  bankName       String?
-  bankAccNumber  String?
-  ifscCode       String?
+  id            String   @id @default(cuid())
+  name          String
+  contactNumber String   @unique
+  password      String
+  email         String   @unique
+  createdAt     DateTime @default(now())
+  address       String?
+  bankName      String?
+  bankAccNumber String?
+  ifscCode      String?
+
+  teacherId      String      @unique
+  teacher        Teacher     @relation(fields: [teacherId], references: [id])
+  institution_id String      @unique
+  institution    Institution @relation(fields: [institution_id], references: [institution_id])
 }
 
 model UsersTemp {
@@ -87,7 +93,6 @@ model UsersTemp {
 // bank accc number
 // ifsc code
 // }
- 
 
 model Group {
   id            String           @id @default(cuid())
@@ -99,11 +104,11 @@ model Group {
 }
 
 model CyberWarrior {
-  id        String   @id @default(cuid())
-  groupId   String
-  group     Group    @relation(fields: [groupId], references: [id])
-  name      String
-  
+  id      String @id @default(cuid())
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
+  name    String
+
   createdAt DateTime @default(now())
 
   @@index([groupId])
