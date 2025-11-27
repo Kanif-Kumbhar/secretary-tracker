@@ -74,7 +74,7 @@ export default function NotFound() {
                             <p className="text-gray-400 text-lg leading-relaxed">
                                 You don't have permission to view this page. This might be
                                 because you're not logged in with the correct credentials or
-                                trying to access a restricted area.
+                                trying to access a restricted area!.
                             </p>
 
                             {/* Action Buttons */}
