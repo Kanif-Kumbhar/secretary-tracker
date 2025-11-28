@@ -25,6 +25,7 @@ export default function Navbar() {
 						alt="Quick Heal"
 						width={40}
 						height={40}
+						style={{ width: "auto", height: "40px" }}
 						priority
 					/>
 				</Link>
