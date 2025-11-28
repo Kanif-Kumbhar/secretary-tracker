@@ -9,7 +9,7 @@ export default async function AdminDashboard() {
 	// console.log(data);
 	return (
 		<div className="p-4">
-			<Header title="Cyber Warrior Dashboard" />
+			<Header title="Secretary Dashboard" />
 			<StatCards />
 			<VisitorsChart />
 			<LeaderBoard />

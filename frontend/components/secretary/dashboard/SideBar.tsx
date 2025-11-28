@@ -3,19 +3,35 @@
 import {
 	Home,
 	Users,
-	Activity,
-	BarChart2,
-	Settings,
 	HelpCircle,
 	MoreHorizontal,
 	LogOut,
+	ClipboardList,
+	Presentation,
+	Megaphone,
 } from "lucide-react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { usePathname, useRouter } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import React from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { logOut } from "@/hooks/user";
 import { useSessionContext } from "@/context/session";
 import Image from "next/image";
@@ -52,8 +68,9 @@ const Sidebar = () => {
 
 				{/* Navigation */}
 				<nav className="space-y-2 flex-1">
+					{/* Dashboard Section */}
 					<p className="px-3 text-xs font-semibold text-gray-500 uppercase">
-						Main
+						Overview
 					</p>
 					<NavItem
 						icon={<Home size={20} />}
@@ -62,8 +79,25 @@ const Sidebar = () => {
 						pathname={pathname}
 						router={router}
 					/>
+
+					{/* Planning Section */}
+					<p className="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase">
+						Planning
+					</p>
 					<NavItem
-						icon={<BarChart2 size={20} />}
+						icon={<ClipboardList size={20} />}
+						label="Execution Plan"
+						to="/secretary/execution-plan"
+						pathname={pathname}
+						router={router}
+					/>
+
+					{/* Reports Section */}
+					<p className="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase">
+						Reports
+					</p>
+					<NavItem
+						icon={<Presentation size={20} />}
 						label="Presentation Details"
 						to="/secretary/presentation-details"
 						pathname={pathname}
@@ -76,29 +110,22 @@ const Sidebar = () => {
 						pathname={pathname}
 						router={router}
 					/>
-					{/* <NavItem
-						icon={<Activity size={20} />}
+					<NavItem
+						icon={<Megaphone size={20} />}
 						label="Mass Activity"
-						to="/teacher/mass-activity"
+						to="/secretary/mass-activity"
 						pathname={pathname}
 						router={router}
 					/>
-					<NavItem
-						icon={<BarChart2 size={20} />}
-						label="College Summary"
-						to="/teacher/college-summary"
-						pathname={pathname}
-						router={router}
-					/> */}
 				</nav>
 			</div>
 
 			{/* Bottom Section */}
 			<div className="mt-auto">
-				<div className="p-3 hover:bg-gray-800 rounded-md cursor-pointer text-gray-300 flex items-center">
-					<Settings size={20} className="mr-3" /> Settings
-				</div>
-				<div className="p-3 hover:bg-gray-800 rounded-md cursor-pointer text-gray-300 flex items-center">
+				<div
+					className="p-3 hover:bg-gray-800 rounded-md cursor-pointer text-gray-300 flex items-center"
+					onClick={() => router.push("/secretary/help")}
+				>
 					<HelpCircle size={20} className="mr-3" /> Get Help
 				</div>
 				<div className="border-t border-gray-700 mt-4 pt-4 flex items-center justify-between">
@@ -158,7 +185,6 @@ const Sidebar = () => {
 					</div>
 				</div>
 			</div>
-
 
 			<AlertDialog open={showLogoutAlert} onOpenChange={setShowLogoutAlert}>
 				<AlertDialogContent className="bg-gray-800 border-gray-700 text-gray-100">
