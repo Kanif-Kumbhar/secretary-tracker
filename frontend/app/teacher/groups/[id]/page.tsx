@@ -1,9 +1,12 @@
+"use client"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useParams } from "next/navigation"
 
-export default function GroupDetailPage({ params }: { params: { id: string } }) {
-  const idNum = Number(params.id)
+export default function GroupDetailPage() {
+  const { id } = useParams();
+  const idNum = Number(id)
   const groupName = Number.isFinite(idNum) ? `Group${idNum}` : "Group"
 
   // Deterministic mock data for 7 weeks

@@ -28,12 +28,20 @@ app.patch(
       let status: any = "REJECTED";
       if (adminAction === "APPROVED") {
         status = "APPROVED";
-        await prisma.teacher.create({
+
+        const teacher = await prisma.teacher.create({
           data: {
             name: user?.fullName,
             email: user?.email,
             password: user?.passwordHash,
             contactNumber: user?.contactNumber,
+          },
+        });
+
+        await prisma.institution.create({
+          data: {
+            name: user.collegeName,
+            teacherId: teacher.id,
           },
         });
       }

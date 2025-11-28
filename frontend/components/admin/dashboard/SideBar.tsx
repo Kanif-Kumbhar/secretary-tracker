@@ -44,6 +44,7 @@ import Image from "next/image";
 import { useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { Session } from "next-auth";
+import { logOut } from "@/hooks/user";
 
 interface SidebarProps {
 	session: Session;
@@ -61,23 +62,7 @@ const Sidebar = ({ session }: SidebarProps) => {
 	const handleLogout = () => {
 		setShowLogoutAlert(false);
 		startTransition(async () => {
-			try {
-				const response = await fetch("/api/logout", {
-					method: "POST",
-				});
-
-				if (response.ok) {
-					toast.success("Logged out successfully");
-					window.location.href = "/auth";
-				} else {
-					throw new Error("Logout failed");
-				}
-			} catch (error) {
-				console.error("Logout error:", error);
-				toast.error("Error during logout");
-				// Force redirect anyway
-				window.location.href = "/auth";
-			}
+			await logOut();
 		});
 	};
 
@@ -429,11 +414,10 @@ const NavItem = ({
 	return (
 		<div
 			onClick={() => router.push(to)}
-			className={`flex items-center px-3 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
-				isActive
+			className={`flex items-center px-3 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${isActive
 					? "bg-gray-800 text-white"
 					: "text-gray-400 hover:bg-gray-800 hover:text-white"
-			}`}
+				}`}
 		>
 			{icon}
 			<span className="ml-3">{label}</span>

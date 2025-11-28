@@ -1,10 +1,13 @@
+"use client"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useParams } from "next/navigation"
 
-export default function GroupWeeklyOverviewPage({ params }: { params: { id: string } }) {
-  const idNum = Number(params.id)
-  const groupName = Number.isFinite(idNum) ? `Group${idNum}` : `Group ${params.id}`
+export default function GroupWeeklyOverviewPage() {
+  const { id } = useParams();
+  const idNum = Number(id)
+  const groupName = Number.isFinite(idNum) ? `Group${idNum}` : `Group ${id}`
 
   const weeks = Array.from({ length: 6 }, (_, i) => {
     const week = i + 1
@@ -52,7 +55,7 @@ export default function GroupWeeklyOverviewPage({ params }: { params: { id: stri
                 <div className="mt-4 flex justify-end">
                   <Button asChild size="sm" className="bg-orange-600 hover:bg-orange-700 text-white">
                     <Link
-                      href={`/teacher/presentation-impact/groups/${params.id}/weeks/${w.week}`}
+                      href={`/teacher/presentation-impact/groups/${id}/weeks/${w.week}`}
                       aria-label={`Edit Week ${w.week}`}
                     >
                       Edit
